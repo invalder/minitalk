@@ -6,7 +6,7 @@
 #    By: nnakarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 23:35:57 by nnakarac          #+#    #+#              #
-#    Updated: 2022/04/03 23:00:29 by nnakarac         ###   ########.fr        #
+#    Updated: 2022/04/04 00:04:49 by nnakarac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,18 @@ LIB_DIR = libft/
 
 INCS = -Iincludes/ -I$(LIB_DIR)includes/
 NAME = server client
-SRCS = server.c client.c
+SRCS = server.c \
+	server_utils.c \
+	client.c \
+	client_utils.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(addprefix $(OBJ_DIR),$(OBJS))
 	@make -C $(LIB_DIR) --silent
-	$(CC) $(addprefix $(OBJ_DIR),client.o) -o client -L $(LIB_DIR) -lft
-	$(CC) $(addprefix $(OBJ_DIR),server.o) -o server -L $(LIB_DIR) -lft
+	$(CC) $(addprefix $(OBJ_DIR),server.o) $(addprefix $(OBJ_DIR),server_utils.o) -o server -L $(LIB_DIR) -lft
+	$(CC) $(addprefix $(OBJ_DIR),client.o) $(addprefix $(OBJ_DIR),client_utils.o) -o client -L $(LIB_DIR) -lft
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
@@ -39,6 +42,7 @@ bonus: $(NAME)
 clean:
 	@make -C $(LIB_DIR) clean --silent
 	$(RM) $(OBJ_DIR)
+
 fclean: clean
 	@make -C $(LIB_DIR) fclean --silent
 	$(RM) client
