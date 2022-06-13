@@ -1,2 +1,2 @@
 # minitalk
-we don't talk anymore!!
+Who don't talk. Minitalk!!!
